@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "diwug-command-action-command-set": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/diwugCommandAction/DiwugCommandActionCommandSet.js",
+          "manifest": "./src/extensions/diwugCommandAction/DiwugCommandActionCommandSet.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "DiwugCommandActionCommandSetStrings": "lib/extensions/diwugCommandAction/loc/{locale}.js"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://willendev.sharepoint.com/sites/Bootcamp/Lists/Bootcamp/AllItems.aspx",
+      "customActions": {
+        "d1135552-10eb-4c68-bb5f-3aa9a8b6e0ea": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+            "sampleTextOne": "One item is selected in the list",
+            "sampleTextTwo": "This command is always visible."
+          }
+        }
+      }
+    },
+    "diwugCommandAction": {
+      "pageUrl": "https://willendev.sharepoint.com/sites/Bootcamp/Lists/Bootcamp/AllItems.aspx",
+      "customActions": {
+        "d1135552-10eb-4c68-bb5f-3aa9a8b6e0ea": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+            "sampleTextOne": "One item is selected in the list",
+            "sampleTextTwo": "This command is always visible."
+          }
+        }
+      }
+    }
+  }
+}

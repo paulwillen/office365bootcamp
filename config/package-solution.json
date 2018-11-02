@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "diwug-command-action-client-side-solution",
+    "id": "fbfaaf45-780c-4189-98a8-a25f5391f17d",
+    "version": "1.0.0.2",
+    "includeClientSideAssets": true,
+    "features": [
+      {
+        "title": "Application Extension - Deployment of custom action.",
+        "description": "Deploys a custom action with ClientSideComponentId association",
+        "id": "074f79a3-33c9-4157-9612-35a90eb59f7a",
+        "version": "1.0.0.0",
+        "assets": {
+          "elementManifests": ["elements.xml", "clientsideinstance.xml"]
+        }
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/diwug-command-action.sppkg"
+  }
+}

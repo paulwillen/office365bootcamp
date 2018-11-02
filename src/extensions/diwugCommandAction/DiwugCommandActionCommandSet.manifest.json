@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/command-set-extension-manifest.schema.json",
+
+  "id": "d1135552-10eb-4c68-bb5f-3aa9a8b6e0ea",
+  "alias": "DiwugCommandActionCommandSet",
+  "componentType": "Extension",
+  "extensionType": "ListViewCommandSet",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2,
+
+  // If true, the component can only be installed on sites where Custom Script is allowed.
+  // Components that allow authors to embed arbitrary script code should set this to true.
+  // https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f
+  "requiresCustomScript": false,
+
+  "items": {
+    "COMMAND_1": {
+      "title": { "default": "Copy" },
+      "iconImageUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAABICAYAAABBeC2mAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAB1UlEQVR4Xu2bvarCQBBGfTALm4B1HiIgeYaIkiYgWKRJFfKouU4hzI7LdXfZzWzWTzjN/szM+QoJEg91Xa/H43FTTqfT+voctFGRJ3IIQE2e0A5AVZ7QDOBD/n6/r9M0JaNtW6MfoRXAh7w8kILr9Wr0JDQCUJEncghATZ7QDkBVntAMQF2e0AogC3lCI4Bs5ImtA8hKntgygGjy8zxbH2p8eTwe6/l8NmYiKIC+742zy7K8WtvncSGavKyzFZfL5dXePtM3di9PhAZQhDwREkAx8oRvAMnk5X5M/gvaJ4Di5AnXAIqUJ1wCKEL++Xxanw2+BVCE/HvdN4Ci5AmfAIqTJ1wDKFKecAmgWHniWwBFyPvyDuAn5Ynb7RZv6L3Jd10HeWNRNnJlS/mQX42apjHm2618COM4GvNBHvJsUV5yBfIR6qQC8mw+yEOeLcpLrkA+Qp1UQJ7NB3nIs0V5yRXIR6iTCsiz+SAPebYoL7kC+Qh1UgF5Nh/k5dCxkM21gTybD/I/LR/jheFhGNaqqozisrk2VnnbwRB2+W1vOxgC5Flxua8N5Nl8kLcdDAHyrLjc1wbybL6k8qn/iu6L9Z0cm0gIUj53IG8TCQHylia50nXd+gfombaIZXNJAgAAAABJRU5ErkJggg==",
+      "type": "command"
+    }
+  }
+}
