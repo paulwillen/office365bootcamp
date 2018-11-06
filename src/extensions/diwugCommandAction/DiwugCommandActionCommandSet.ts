@@ -7,9 +7,12 @@ import {
   IListViewCommandSetListViewUpdatedParameters,
   IListViewCommandSetExecuteEventParameters
 } from "@microsoft/sp-listview-extensibility";
-import { Dialog } from "@microsoft/sp-dialog";
+import { Dialog } from '@microsoft/sp-dialog';
+
+import { sp, ItemAddResult } from "@pnp/sp";
 
 import * as strings from "DiwugCommandActionCommandSetStrings";
+import { IClipboardItem } from "../../models/ClipboardItem";
 
 /**
  * If your command set uses the ClientSideComponentProperties JSON input,
@@ -17,16 +20,14 @@ import * as strings from "DiwugCommandActionCommandSetStrings";
  * You can define an interface to describe it.
  */
 export interface IDiwugCommandActionCommandSetProperties {
-  // This is an example; replace with your own properties
-  sampleTextOne: string;
-  sampleTextTwo: string;
 }
 
 const LOG_SOURCE: string = "DiwugCommandActionCommandSet";
 
-export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet<
-  IDiwugCommandActionCommandSetProperties
-> {
+const LocalStorageKey: string = "DiwugBootcampStorage";
+
+export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet<IDiwugCommandActionCommandSetProperties>
+{
   @override
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, "Initialized DiwugCommandActionCommandSet");
@@ -37,10 +38,15 @@ export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet
   public onListViewUpdated(
     event: IListViewCommandSetListViewUpdatedParameters
   ): void {
-    const compareOneCommand: Command = this.tryGetCommand("COMMAND_1");
-    if (compareOneCommand) {
-      // This command should be hidden unless exactly one row is selected.
-      compareOneCommand.visible = event.selectedRows.length > 0;
+    const copyCommand: Command = this.tryGetCommand("COMMAND_1");
+    if (copyCommand) {
+      // This command should be hidden unless one or more rows are selected.
+      copyCommand.visible = event.selectedRows.length > 0;
+    }
+
+    const pasteCommand: Command = this.tryGetCommand("COMMAND_2");
+    if (pasteCommand) {
+      pasteCommand.visible = this.getClipboardItems().length > 0;
     }
   }
 
@@ -48,31 +54,58 @@ export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet
   public onExecute(event: IListViewCommandSetExecuteEventParameters): void {
     switch (event.itemId) {
       case "COMMAND_1":
-        // console.log("entering command1");
-
-        var itemsFromStorage = localStorage.getItem("DiwugBootcampStorage");
-        // console.log(itemsFromStorage);
-        var items = [];
-        if (itemsFromStorage) {
-          items = JSON.parse(localStorage.getItem("DiwugBootcampStorage"));
-          // console.log(items);
-        }
-        // console.log(event.selectedRows[0].getValueByName("Title"));
-        event.selectedRows.forEach(element => {
-          items.push({
-            Title: element.getValueByName("Title")
-          });
-        });
-
-        // console.log("pushed item");
-        // console.log(items);
-        localStorage.setItem("DiwugBootcampStorage", JSON.stringify(items));
+        this.onCopy(event);
         break;
       case "COMMAND_2":
-        Dialog.alert(`${this.properties.sampleTextTwo}`);
+        this.onPaste();
         break;
       default:
         throw new Error("Unknown command");
     }
   }
+
+  private onCopy = (event: IListViewCommandSetExecuteEventParameters) => {
+    const itemsFromStorage = this.getClipboardData();
+    let items: IClipboardItem[] = [];
+    if (itemsFromStorage) {
+      items = JSON.parse(itemsFromStorage);
+    }
+    event.selectedRows.forEach(element => {
+      items.push({
+        Title: element.getValueByName("Title")
+      });
+    });
+
+    this.setClipboardData(items);
+  }
+
+  private onPaste = () => {
+    try {
+      const listUrl: string = this.context.pageContext.list.serverRelativeUrl;
+
+      const clipboardItems = this.getClipboardItems();
+
+      for (let clipboardItem of clipboardItems) {
+        sp.web.getList(listUrl)
+          .items.add(clipboardItem)
+          .then((result: ItemAddResult) => { })
+          .catch(reason => Dialog.alert(`Error pasting: ${reason}`));
+      }
+    }
+    catch (ex) {
+      Dialog.alert(`Error executing paste: ${ex}`);
+    }
+  }
+
+  private getClipboardItems = (): IClipboardItem[] => {
+    const dataStr: string = this.getClipboardData();
+
+    return dataStr ? JSON.parse(dataStr) : [];
+  }
+
+  private getClipboardData = (): string =>
+    localStorage.getItem(LocalStorageKey)
+
+  private setClipboardData = (items: IClipboardItem[]): void =>
+    localStorage.setItem(LocalStorageKey, JSON.stringify(items))
 }

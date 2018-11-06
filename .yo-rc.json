@@ -5,6 +5,8 @@
     "libraryId": "fbfaaf45-780c-4189-98a8-a25f5391f17d",
     "environment": "spo",
     "packageManager": "npm",
-    "isCreatingSolution": true
+    "isCreatingSolution": false,
+    "componentType": "extension",
+    "extensionType": "ListViewCommandSet"
   }
 }

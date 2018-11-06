@@ -12,7 +12,10 @@
         "id": "074f79a3-33c9-4157-9612-35a90eb59f7a",
         "version": "1.0.0.0",
         "assets": {
-          "elementManifests": ["elements.xml", "clientsideinstance.xml"]
+          "elementManifests": [
+            "elements.xml",
+            "clientsideinstance.xml"
+          ]
         }
       }
     ]
