@@ -7,6 +7,6 @@
     "packageManager": "npm",
     "isCreatingSolution": false,
     "componentType": "extension",
-    "extensionType": "ListViewCommandSet"
+    "extensionType": "ApplicationCustomizer"
   }
 }

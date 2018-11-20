@@ -9,10 +9,19 @@
           "manifest": "./src/extensions/diwugCommandAction/DiwugCommandActionCommandSet.manifest.json"
         }
       ]
+    },
+    "copy-paste-footer-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/copyPasteFooter/CopyPasteFooterApplicationCustomizer.js",
+          "manifest": "./src/extensions/copyPasteFooter/CopyPasteFooterApplicationCustomizer.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "DiwugCommandActionCommandSetStrings": "lib/extensions/diwugCommandAction/loc/{locale}.js"
+    "DiwugCommandActionCommandSetStrings": "lib/extensions/diwugCommandAction/loc/{locale}.js",
+    "CopyPasteFooterApplicationCustomizerStrings": "lib/extensions/copyPasteFooter/loc/{locale}.js"
   }
 }
