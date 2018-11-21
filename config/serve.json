@@ -8,8 +8,11 @@
       "customActions": {
         "d1135552-10eb-4c68-bb5f-3aa9a8b6e0ea": {
           "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
-          "properties": {
-          }
+          "properties": {}
+        },
+        "750a7899-ea0d-42bd-b892-84991fd87d52": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {}
         }
       }
     },
@@ -18,8 +21,16 @@
       "customActions": {
         "d1135552-10eb-4c68-bb5f-3aa9a8b6e0ea": {
           "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
-          "properties": {
-          }
+          "properties": {}
+        }
+      }
+    },
+    "copyPasteFooter": {
+      "pageUrl": "https://willendev.sharepoint.com/sites/Bootcamp/Lists/Bootcamp/AllItems.aspx",
+      "customActions": {
+        "750a7899-ea0d-42bd-b892-84991fd87d52": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {}
         }
       }
     }

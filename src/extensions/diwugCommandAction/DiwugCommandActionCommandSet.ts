@@ -11,8 +11,7 @@ import { Dialog } from '@microsoft/sp-dialog';
 
 import { sp, ItemAddResult } from "@pnp/sp";
 
-import * as strings from "DiwugCommandActionCommandSetStrings";
-import { IClipboardItem } from "../../models/ClipboardItem";
+import { ClipboardRepository } from "../../repositories/ClipboardRepository";
 
 /**
  * If your command set uses the ClientSideComponentProperties JSON input,
@@ -24,10 +23,10 @@ export interface IDiwugCommandActionCommandSetProperties {
 
 const LOG_SOURCE: string = "DiwugCommandActionCommandSet";
 
-const LocalStorageKey: string = "DiwugBootcampStorage";
-
 export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet<IDiwugCommandActionCommandSetProperties>
 {
+  private clipboard: ClipboardRepository = new ClipboardRepository();
+
   @override
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, "Initialized DiwugCommandActionCommandSet");
@@ -46,7 +45,7 @@ export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet
 
     const pasteCommand: Command = this.tryGetCommand("COMMAND_2");
     if (pasteCommand) {
-      pasteCommand.visible = this.getClipboardItems().length > 0;
+      pasteCommand.visible = this.clipboard.getItemCount() > 0;
     }
   }
 
@@ -65,25 +64,22 @@ export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet
   }
 
   private onCopy = (event: IListViewCommandSetExecuteEventParameters) => {
-    const itemsFromStorage = this.getClipboardData();
-    let items: IClipboardItem[] = [];
-    if (itemsFromStorage) {
-      items = JSON.parse(itemsFromStorage);
-    }
+    const items = this.clipboard.getItems();
+
     event.selectedRows.forEach(element => {
       items.push({
         Title: element.getValueByName("Title")
       });
     });
 
-    this.setClipboardData(items);
+    this.clipboard.setItems(items);
   }
 
   private onPaste = () => {
     try {
       const listUrl: string = this.context.pageContext.list.serverRelativeUrl;
 
-      const clipboardItems = this.getClipboardItems();
+      const clipboardItems = this.clipboard.getItems();
 
       for (let clipboardItem of clipboardItems) {
         sp.web.getList(listUrl)
@@ -96,16 +92,4 @@ export default class DiwugCommandActionCommandSet extends BaseListViewCommandSet
       Dialog.alert(`Error executing paste: ${ex}`);
     }
   }
-
-  private getClipboardItems = (): IClipboardItem[] => {
-    const dataStr: string = this.getClipboardData();
-
-    return dataStr ? JSON.parse(dataStr) : [];
-  }
-
-  private getClipboardData = (): string =>
-    localStorage.getItem(LocalStorageKey)
-
-  private setClipboardData = (items: IClipboardItem[]): void =>
-    localStorage.setItem(LocalStorageKey, JSON.stringify(items))
 }
